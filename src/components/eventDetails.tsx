@@ -12,11 +12,16 @@ import { motion } from "framer-motion";
 import { eventColor } from "./eventColors";
 
 function EventDetails({ updateEventId }: { updateEventId: number }) {
+
+  // Fetch events and control options from context and redux
   const { events, updateEvent, deleteEvent } = useEvents();
   const { controlOption, setControlOption } = useModelOption();
   const { isEventDetails, isEditable } = controlOption;
 
+  // Fetch event details to update
   const data = events.find((event) => event.id === updateEventId);
+
+  // Form data to update event
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -28,6 +33,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
     location: "",
   });
 
+  // Update form data when event details change or modal opens
   useEffect(() => {
     if (data) {
       setFormData({
@@ -43,7 +49,11 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
     }
   }, [data]);
 
+  // Generate time options for select input
   const generateTimeOptions = () =>
+
+    // Array of 24 hours with 30 minutes interval 
+    // for example: ["00:00", "00:30", "01:00", "01:30", ...]
     Array.from({ length: 24 }, (_, hour) =>
       ["00", "30"].map((minute) => {
         const time = `${hour.toString().padStart(2, "0")}:${minute}`;
@@ -55,6 +65,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
       })
     ).flat();
 
+    // Close event details modal
   const handleModelClose = () => {
     setControlOption({
       ...controlOption,
@@ -63,6 +74,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
     });
   };
 
+  // Save event details
   const handleSave = () => {
     if (!formData.title) {
       alert("Please provide title for the event");
@@ -78,8 +90,9 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
       return;
     }
 
-    // Save event details
     try {
+
+      // Update event with new data and close modal
       const event = {
         ...formData,
         id: updateEventId,
@@ -88,11 +101,12 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
       handleModelClose(); // Close modal after save
     } catch (e) {
       alert(e);
+      console.error(e);
     }
   };
 
+  // Delete event
   const handleDelete = () => {
-    // Delete event
     if (updateEventId !== -1) {
       deleteEvent(updateEventId);
     }
@@ -282,7 +296,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
             </div>
           </div>
 
-          {/* Save Button */}
+          {/* Save Button  and Delete Button */}
           {isEditable && (
             <div className="flex gap-4">
               <button

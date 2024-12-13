@@ -15,13 +15,24 @@ import { eventColor } from "./eventColors";
 const genAI = new GoogleGenerativeAI("AIzaSyAXbPfySMNVUPVz4OOp6OAgGvleY7TeNV4");
 
 function CreateEvent() {
+  // addEvent function from redux
   const { addEvent } = useEvents();
+
+  // controlOption from context
   const { controlOption, setControlOption } = useModelOption();
+
+  // Destructuring controlOption to get isModelOpen : for opening and closing the model
+  //  and selectedDate : for passing date to the form
   const { isModelOpen, selectedDate } = controlOption;
+
+  // Local state to manage AI mode and description
   const [isAiMode, setIsAiMode] = useState(false);
   const [aiDescription, setAiDescription] = useState("");
+
+  // Local state to manage AI generation status
   const [isGenerating, setIsGenerating] = useState(false);
 
+  // Local state to manage form data for creating event
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -33,6 +44,11 @@ function CreateEvent() {
     location: "",
   });
 
+  // Update date in form data when selectedDate changes
+  // for two test cases in the CreateEvent component
+  // 1. When the user selects a new date from the calendar
+  // 2. when the user click on "Create Event" button
+
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
@@ -40,6 +56,9 @@ function CreateEvent() {
     }));
   }, [selectedDate]);
 
+  // Function to generate time options for select input with 30 minutes interval
+  // for example: ["00:00", "00:30", "01:00", "01:30", ...]
+  // from 00:00 to 23:30
   const generateTimeOptions = () =>
     Array.from({ length: 24 }, (_, hour) =>
       ["00", "30"].map((minute) => {
@@ -52,6 +71,7 @@ function CreateEvent() {
       })
     ).flat();
 
+  // Function to reset form data
   const resetFromData = () => {
     setFormData({
       title: "",
@@ -65,7 +85,9 @@ function CreateEvent() {
     });
   };
 
+  // Function to save event to redux store
   const saveEvent = () => {
+    // simple validation for title, date, start time and end time
     if (!formData.title) {
       alert("Please provide title for the event");
       return;
@@ -80,6 +102,7 @@ function CreateEvent() {
       return;
     }
 
+    // Add event to redux store and close the model
     try {
       addEvent({
         id: Math.floor(Math.random() * 1000000),
@@ -92,20 +115,29 @@ function CreateEvent() {
     }
   };
 
+  // Function to close the model and reset form data
   const handleModelClose = () => {
     setControlOption({ ...controlOption, isModelOpen: false });
     resetFromData();
   };
 
+  // Function to get response for given prompt using AI
   const getResponseForGivenPrompt = async () => {
+    // simple validation for AI description
     if (!aiDescription) {
       alert("Please provide a description to generate event details");
       return;
     }
+
+    // prevent multiple clicks while generating response
     if (isGenerating) return;
+
+    // Generate response for given prompt using AI
     try {
       setIsGenerating(true);
       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+      // Prompt for AI model with the given description
       const systemPrompt = `Create an event with the following json parameters:
      { title: "",
     description: "create description as per the given title mentioned in prompt",
@@ -118,11 +150,15 @@ function CreateEvent() {
     }
       for input with prompt: ${aiDescription} remember the output must be only json object with the details of the event;`;
 
+      // Generate content using the model
       const result = await model.generateContent(systemPrompt);
       const response = result.response;
       const text = response.text();
+
+      // Parse the generated JSON and update form data
       const json = JSON.parse(text.replace(/```json|```/g, ""));
-      console.log(json);
+
+      // Update form data with generated event details
       setFormData({
         ...formData,
         title: json.title,
@@ -132,12 +168,15 @@ function CreateEvent() {
         endTime: json.endTime,
         category: json.category,
       });
+
+      // Close the AI model and reset AI description
       setAiDescription("");
       setIsAiMode(false);
     } catch (error) {
+      // Handle error and reset AI mode
       alert("Something Went Wrong");
       setIsGenerating(false);
-      console.log("Something Went Wrong");
+      console.log(error);
     } finally {
       setIsGenerating(false);
     }
@@ -147,6 +186,11 @@ function CreateEvent() {
     <Dialog open={isModelOpen} onOpenChange={handleModelClose}>
       <DialogContent className="w-[50%] min-h-[90%] bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
         <DialogHeader className="relative flex items-center">
+          {/* 
+            Button to toggle AI mode
+            - Button will change text based on isAiMode state
+            - Button will have a loading state while generating response
+          */}
           <motion.div
             className="absolute top-0 left-0"
             whileHover={{ scale: 1.1 }}
@@ -167,7 +211,11 @@ function CreateEvent() {
           </DialogTitle>
         </DialogHeader>
 
-        {/* Rest of the component remains the same */}
+        {/* 
+              AnimatePresence component to animate between AI and Manual mode
+              - AI mode will have a text area to enter description
+              - Manual mode will have form fields to enter event details
+            */}
         <AnimatePresence mode="wait">
           {isAiMode ? (
             <motion.div
@@ -206,7 +254,9 @@ function CreateEvent() {
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="flex flex-col text-lg gap-6 px-8 py-4">
-              {/* Form fields with futuristic styling */}
+              {/* 
+                  Event Form Fields
+              */}
               <div className="space-y-6">
                 <div className="space-y-2">
                   <label className="text-cyan-300 font-semibold">
@@ -223,6 +273,7 @@ function CreateEvent() {
                   />
                 </div>
 
+                {/* Event Description*/}
                 <div className="space-y-2">
                   <label className="text-cyan-300 font-semibold">
                     Event Description
@@ -272,6 +323,8 @@ function CreateEvent() {
                       }
                     />
                   </div>
+
+                  {/* Event Time */}
                   <div className="space-y-2">
                     <label className="text-cyan-300 font-semibold">
                       Event Time

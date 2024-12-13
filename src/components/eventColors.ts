@@ -1,3 +1,5 @@
+
+// Event colors for the calendar
 export const eventColor = {
     "Work": {
         backgroundColor: "bg-gradient-to-r from-blue-600 to-cyan-400",
