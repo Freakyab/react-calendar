@@ -108,7 +108,7 @@ function Sidenav({
   }) => (
     <div className="mb-6">
       <div className="flex items-center gap-3 p-4 border-b border-gray-700 italic">
-        <p className="text-xl font-semibold tracking-wide text-gray-200">
+        <p className="text-lg font-semibold tracking-wide text-gray-200">
           {title}
         </p>
         {title === "Upcoming Events" && (
@@ -132,7 +132,7 @@ function Sidenav({
             onClick={() => handleEventDetailsOpen(event.id)}>
             <div className="flex items-center gap-2 w-1/3">
               <p
-                className={`text-4xl font-bold ${
+                className={`text-2xl font-bold ${
                   eventColor[event.category as keyof typeof eventColor]?.primary
                 }`}>
                 {event.date.split("-")[2]}
@@ -149,7 +149,7 @@ function Sidenav({
 
             <div className="flex flex-col w-2/3 items-end">
               <p
-                className={`text-2xl font-extralight first-letter:capitalize line-clamp-1`}>
+                className={`text-xl font-extralight first-letter:capitalize line-clamp-1`}>
                 {event.title}
               </p>
               <p className="text-sm opacity-70">
@@ -165,7 +165,7 @@ function Sidenav({
   return (
     <div className="w-[40%] h-screen bg-secondary flex flex-col">
       <div className="p-6 border-b border-gray-700 flex items-center justify-between">
-        <h2 className="text-4xl tracking-wide flex items-center gap-3">
+        <h2 className="text-2xl tracking-wide flex items-center gap-3">
           <Calendar className="h-8 w-8 text-gray-400" />
           React Calendar
         </h2>

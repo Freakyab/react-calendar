@@ -42,7 +42,7 @@ const Calendar = ({
         <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
           <ChevronLeft />
         </button>
-        <h2 className="text-2xl">{format(currentMonth, "MMMM yyyy")}</h2>
+        <h2 className="text-xl">{format(currentMonth, "MMMM yyyy")}</h2>
         <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
           <ChevronRight />
         </button>
@@ -54,7 +54,7 @@ const Calendar = ({
   const renderDays = () => {
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     return (
-      <div className={`grid grid-cols-7 text-xl text-center font-light`}>
+      <div className={`grid grid-cols-7 text-lg text-center font-light`}>
         {days.map((day, index) => (
           <div key={index} className={`p-2`}>
             {day}
@@ -85,7 +85,7 @@ const Calendar = ({
       <div className="grid grid-cols-[max-content_1fr_1fr_1fr_1fr_1fr_1fr_1fr] gap-4">
         {/* Time Slots Column */}
         <div className="flex flex-col border-r border-gray-600 px-2">
-          <div className=" text-white p-4 text-center font-light text-xl">
+          <div className=" text-white p-4 text-center font-light text-lg">
             Time
           </div>
           {timeSlots.map((time, hour) => (
@@ -100,7 +100,7 @@ const Calendar = ({
         {/* Days of the Week */}
         {weekDays.map((day) => (
           <div key={day} className="flex flex-col border border-gray-600">
-            <div className="p-4 text-xl text-center font-light">
+            <div className="p-4 text-lg text-center font-light">
               {format(new Date(day), "EEE dd")}
             </div>
 

@@ -206,7 +206,7 @@ function CreateEvent() {
             </button>
           </motion.div>
 
-          <DialogTitle className="flex-grow text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-600 pb-4">
+          <DialogTitle className="flex-grow text-2xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-600 pb-4">
             Create Event
           </DialogTitle>
         </DialogHeader>
@@ -226,7 +226,7 @@ function CreateEvent() {
               transition={{ duration: 0.6, ease: "easeInOut" }}
               className="flex flex-col justify-start text-lg gap-6 px-8 py-4">
               <label
-                className="text-xl font-semibold text-cyan-300 flex items-center gap-2"
+                className="text-lg font-semibold text-cyan-300 flex items-center gap-2"
                 htmlFor="event-description">
                 <Zap className="w-6 h-6" />
                 AI Event Generator

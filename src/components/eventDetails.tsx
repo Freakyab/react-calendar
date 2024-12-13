@@ -117,7 +117,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
     <Dialog open={isEventDetails} onOpenChange={handleModelClose}>
       <DialogContent className="w-[50%] min-h-[90%] bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
         <DialogHeader className="relative flex items-center">
-          <DialogTitle className="flex-grow text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-600 pb-4">
+          <DialogTitle className="flex-grow text-2xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-600 pb-4">
             Event Details
           </DialogTitle>
         </DialogHeader>
