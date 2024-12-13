@@ -12,10 +12,10 @@ type Options = {
   isEventDetails: boolean;
 
   // Boolean to check if the model data is editable
-  isEditable : boolean;
+  isEditable: boolean;
 
   // Search query to filter events
-  searchQuery : string;
+  searchQuery: string;
 };
 
 export const ModelControlContext = createContext({
@@ -24,11 +24,11 @@ export const ModelControlContext = createContext({
     isModelOpen: false,
     selectedDate: new Date(),
     isEventDetails: false,
-    isEditable : false,
-    searchQuery : "",
+    isEditable: false,
+    searchQuery: "",
   },
-  // Function to set the model options
-  setControlOption: (option: Options) => {},
+
+  setControlOption: (_option: Options) => {},
 });
 
 export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -37,9 +37,9 @@ export const ModelControlProvider: React.FC<{ children: React.ReactNode }> = ({
   const [controlOption, setControlOption] = useState<Options>({
     isModelOpen: false,
     selectedDate: new Date(),
-    isEventDetails : false,
-    isEditable : false,
-    searchQuery : "",
+    isEventDetails: false,
+    isEditable: false,
+    searchQuery: "",
   });
   return (
     <ModelControlContext.Provider value={{ controlOption, setControlOption }}>
