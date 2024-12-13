@@ -36,7 +36,7 @@ const Calendar = ({
   // Function to render the header of the calendar and navigate between months
   const renderHeader = () => {
     return (
-      <div className="flex justify-between items-center p-4">
+      <div className="flex justify-between items-center p-2">
         {/* Navigation Buttons*/}
 
         <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>
@@ -54,7 +54,7 @@ const Calendar = ({
   const renderDays = () => {
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     return (
-      <div className={`grid grid-cols-7 text-lg text-center font-light`}>
+      <div className={`grid grid-cols-7 text-lg py-2 text-center font-light`}>
         {days.map((day, index) => (
           <div key={index} className={`p-2`}>
             {day}
@@ -82,16 +82,16 @@ const Calendar = ({
     );
 
     return (
-      <div className="grid grid-cols-[max-content_1fr_1fr_1fr_1fr_1fr_1fr_1fr] gap-4">
+      <div className="grid grid-cols-[max-content_1fr_1fr_1fr_1fr_1fr_1fr_1fr] gap-2 py-2">
         {/* Time Slots Column */}
         <div className="flex flex-col border-r border-gray-600 px-2">
-          <div className=" text-white p-4 text-center font-light text-lg">
+          <div className=" text-white p-2 text-center font-light">
             Time
           </div>
           {timeSlots.map((time, hour) => (
             <div
               key={hour}
-              className="h-12 border-t border-gray-600 flex items-center justify-center">
+              className="h-8 border-t border-gray-600 flex items-center justify-center">
               {time}
             </div>
           ))}
@@ -100,13 +100,13 @@ const Calendar = ({
         {/* Days of the Week */}
         {weekDays.map((day) => (
           <div key={day} className="flex flex-col border border-gray-600">
-            <div className="p-4 text-lg text-center font-light">
+            <div className="p-2 text-center font-light">
               {format(new Date(day), "EEE dd")}
             </div>
 
             {/* Hour Slots */}
             {Array.from({ length: 48 }, (_, hour) => (
-              <div key={hour} className="h-12 border-t relative">
+              <div key={hour} className="h-8 border-t relative">
                 {/*  Event Slots */}
                 {events
                   .filter((event) => event.date === day)
@@ -134,7 +134,7 @@ const Calendar = ({
                             });
                           }}
                           style={{
-                            height: `${(endSlot - startSlot) * 3}rem`,
+                            height: `${(endSlot - startSlot) * 2}rem`,
                             top: 0,
                             position: "absolute",
                             width: "100%",
@@ -246,7 +246,7 @@ const Calendar = ({
                     isModelOpen: true,
                   });
                 }}
-                className={`p-4 border-[4px] border-secondary hover:bg-slate-700 text-black rounded-md ${
+                className={`p-2 border-[2px] border-secondary hover:bg-slate-700 text-black rounded-md ${
                   isCurrentMonth ? "text-white" : "text-gray-400"
                 } ${
                   format(new Date(), "yyyy-MM-dd") === cellDate
@@ -254,7 +254,7 @@ const Calendar = ({
                     : ""
                 } ${isCurrentDayWeekend && "text-red-500"}`}>
                 {formattedDate}
-                <div className="flex flex-col overflow-y-auto max-h-16 gap-2">
+                <div className="flex flex-col overflow-y-auto max-h-14 gap-1 items-stretch pt-1">
                   {/* 
                     Loop through the events and render the events for the current day
                   */}
@@ -287,7 +287,7 @@ const Calendar = ({
                               eventColor[
                                 event.category as keyof typeof eventColor
                               ].primary
-                            } first-letter:capitalize p-2 rounded-xl cursor-pointer`}>
+                            } first-letter:capitalize text-sm p-1 rounded-xl cursor-pointer`}>
                             {event.title}
                           </div>
                         )}
@@ -306,7 +306,7 @@ const Calendar = ({
 
       // Push the days to the rows array  and reset the days array for the next row
       rows.push(
-        <div key={`row-${day.toISOString()}`} className="grid grid-cols-7 h-32">
+        <div key={`row-${day.toISOString()}`} className="grid grid-cols-7 h-24">
           {days}
         </div>
       );
@@ -318,8 +318,8 @@ const Calendar = ({
   };
 
   return (
-    <div className="w-full h-screen p-4 overflow-auto">
-      <div className="flex gap-4 justify-between w-full my-2">
+    <div className="w-full h-screen px-4 py-2 overflow-auto">
+      <div className="flex gap-2 justify-between w-full my-2">
         {/* 
           Search Input and Calendar/List View Toggle
         */}

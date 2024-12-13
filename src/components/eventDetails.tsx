@@ -143,7 +143,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex flex-col text-lg gap-6 px-8 py-4">
+          className="flex flex-col text-sm gap-6 px-8 py-4">
           {/* Event Title */}
           <div className="space-y-6">
             <div className="space-y-2">
@@ -152,7 +152,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
                 disabled={!isEditable}
                 type="text"
                 placeholder="Enter event title"
-                className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 
+                className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 
                   ${!isEditable && "cursor-not-allowed"}  placeholder-gray-500`}
                 value={formData.title}
                 onChange={(e) =>
@@ -169,7 +169,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
                 disabled={!isEditable}
                 rows={3}
                 placeholder="Describe your event"
-                className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500
+                className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500
                 ${!isEditable && "cursor-not-allowed"}  
                 `}
                 value={formData.description}
@@ -180,7 +180,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
             </div>
 
             {/* Category Selector */}
-            <div className="flex justify-between gap-4">
+            <div className="flex justify-between gap-3">
               {(["Work", "Personal", "Others"] as const).map((category) => (
                 <button
                   key={category}
@@ -188,7 +188,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
                   onClick={() => setFormData({ ...formData, category })}
                   className={`
                     ${!isEditable && "cursor-not-allowed"}  
-                    w-full p-3 rounded-xl text-white font-semibold transition-all duration-300 ${
+                    w-full p-2 rounded-xl text-white font-semibold transition-all duration-300 ${
                       formData.category === category
                         ? eventColor[category].backgroundColor
                         : "bg-gray-800 border border-gray-700 opacity-50"
@@ -200,7 +200,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
             </div>
 
             {/* Date and Time */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
                 <label className="text-cyan-300 font-semibold">
                   Event Date
@@ -208,7 +208,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
                 <input
                   disabled={!isEditable}
                   type="date"
-                  className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500
+                  className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500
                     ${!isEditable && "cursor-not-allowed"}  
                     `}
                   value={formData.date}
@@ -231,7 +231,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
                         startTime: e.target.value,
                       })
                     }
-                    className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500
+                    className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500
                     ${!isEditable && "cursor-not-allowed"}  
                     `}>
                     {generateTimeOptions()}
@@ -243,7 +243,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
                     onChange={(e) =>
                       setFormData({ ...formData, endTime: e.target.value })
                     }
-                    className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500
+                    className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500
                     ${!isEditable && "cursor-not-allowed"}  
                     `}>
                     {generateTimeOptions()}
@@ -254,7 +254,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
 
             {/* Link and Location */}
             <div className="space-y-4">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <Presentation className="text-cyan-300" />
                 {isEditable ? (
                   <input
@@ -264,7 +264,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
                     onChange={(e) =>
                       setFormData({ ...formData, link: e.target.value })
                     }
-                    className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500 ${
+                    className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500 ${
                       !isEditable && "cursor-not-allowed"
                     }  `}
                   />
@@ -278,7 +278,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
                   </a>
                 )}
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <MapPin className="text-cyan-300" />
                 <input
                   disabled={!isEditable}
@@ -288,7 +288,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
                   onChange={(e) =>
                     setFormData({ ...formData, location: e.target.value })
                   }
-                  className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500
+                  className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500
                     ${!isEditable && "cursor-not-allowed"}  
                     `}
                 />
@@ -298,15 +298,15 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
 
           {/* Save Button  and Delete Button */}
           {isEditable && (
-            <div className="flex gap-4">
+            <div className="flex gap-3">
               <button
                 onClick={handleDelete}
-                className="w-full p-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300">
+                className="w-full p-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300">
                 Delete Event
               </button>
               <button
                 onClick={handleSave}
-                className="w-full p-4 rounded-xl bg-gradient-to-r 
+                className="w-full p-3 rounded-xl bg-gradient-to-r 
                 from-green-400 to-green-500 hover:from-green-500 hover:to-green-600
                 text-white font-bold
                  transition-all duration-300">

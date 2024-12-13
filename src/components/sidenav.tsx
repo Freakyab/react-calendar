@@ -106,7 +106,7 @@ function Sidenav({
     title: string;
     icon: React.ElementType;
   }) => (
-    <div className="mb-6">
+    <div className="mb-3">
       <div className="flex items-center gap-3 p-4 border-b border-gray-700 italic">
         <p className="text-lg font-semibold tracking-wide text-gray-200">
           {title}
@@ -121,7 +121,7 @@ function Sidenav({
           <div
             key={event.id}
             className={`
-              rounded-xl px-4 py-3 flex items-center justify-between 
+              rounded-xl p-2 flex items-center justify-between 
               cursor-pointer transition-all duration-300 
               hover:scale-[1.02] hover:shadow-lg
               ${
@@ -130,9 +130,9 @@ function Sidenav({
               }
             `}
             onClick={() => handleEventDetailsOpen(event.id)}>
-            <div className="flex items-center gap-2 w-1/3">
+            <div className="flex items-center gap-1 w-1/3">
               <p
-                className={`text-2xl font-bold ${
+                className={`text-4xl font-bold ${
                   eventColor[event.category as keyof typeof eventColor]?.primary
                 }`}>
                 {event.date.split("-")[2]}
@@ -149,10 +149,10 @@ function Sidenav({
 
             <div className="flex flex-col w-2/3 items-end">
               <p
-                className={`text-xl font-extralight first-letter:capitalize line-clamp-1`}>
+                className={`text-lg font-extralight first-letter:capitalize line-clamp-1`}>
                 {event.title}
               </p>
-              <p className="text-sm opacity-70">
+              <p className="text-xs opacity-70">
                 {event.startTime} - {event.endTime}
               </p>
             </div>
@@ -163,16 +163,16 @@ function Sidenav({
   );
 
   return (
-    <div className="w-[40%] h-screen bg-secondary flex flex-col">
-      <div className="p-6 border-b border-gray-700 flex items-center justify-between">
-        <h2 className="text-2xl tracking-wide flex items-center gap-3">
-          <Calendar className="h-8 w-8 text-gray-400" />
+    <div className="w-[35%] h-screen bg-secondary flex flex-col">
+      <div className="p-4 border-b border-gray-700 flex items-center justify-between">
+        <h2 className="text-xl tracking-wide flex items-center gap-4">
+          <Calendar className="h-6 w-6 text-gray-400" />
           React Calendar
         </h2>
         <button
-          className="flex items-center gap-3 bg-slate-600 rounded-lg px-4 py-2 text-lg transition-all hover:bg-slate-500"
+          className="flex items-center gap-1 bg-slate-600 rounded-lg p-2 text-sm transition-all hover:bg-slate-500"
           onClick={handleModelOpen}>
-          <Plus className="h-5 w-5" />
+          <Plus className="h-4 w-4" />
           Create Event
         </button>
       </div>

@@ -184,7 +184,7 @@ function CreateEvent() {
 
   return (
     <Dialog open={isModelOpen} onOpenChange={handleModelClose}>
-      <DialogContent className="w-[50%] min-h-[90%] bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+      <DialogContent className="w-[50%] bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
         <DialogHeader className="relative flex items-center">
           {/* 
             Button to toggle AI mode
@@ -224,9 +224,9 @@ function CreateEvent() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
-              className="flex flex-col justify-start text-lg gap-6 px-8 py-4">
+              className="flex flex-col justify-start text-sm gap-6 px-8 py-4">
               <label
-                className="text-lg font-semibold text-cyan-300 flex items-center gap-2"
+                className="text-sm font-semibold text-cyan-300 flex items-center gap-2"
                 htmlFor="event-description">
                 <Zap className="w-6 h-6" />
                 AI Event Generator
@@ -253,7 +253,7 @@ function CreateEvent() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="flex flex-col text-lg gap-6 px-8 py-4">
+              className="flex flex-col text-sm gap-6 px-8 py-4">
               {/* 
                   Event Form Fields
               */}
@@ -265,7 +265,7 @@ function CreateEvent() {
                   <input
                     type="text"
                     placeholder="Enter event title"
-                    className="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500"
+                    className="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500"
                     value={formData.title}
                     onChange={(e) =>
                       setFormData({ ...formData, title: e.target.value })
@@ -281,7 +281,7 @@ function CreateEvent() {
                   <textarea
                     rows={3}
                     placeholder="Describe your event"
-                    className="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500"
+                    className="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500"
                     value={formData.description}
                     onChange={(e) =>
                       setFormData({ ...formData, description: e.target.value })
@@ -296,7 +296,7 @@ function CreateEvent() {
                       key={category}
                       onClick={() => setFormData({ ...formData, category })}
                       className={`
-                        w-full p-3 rounded-xl text-white font-semibold transition-all duration-300
+                        w-full p-2 rounded-xl text-white font-semibold transition-all duration-300
                         ${
                           formData.category === category
                             ? eventColor[category].backgroundColor
@@ -316,7 +316,7 @@ function CreateEvent() {
                     </label>
                     <input
                       type="date"
-                      className="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                      className="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
                       value={formData.date}
                       onChange={(e) =>
                         setFormData({ ...formData, date: e.target.value })
@@ -338,7 +338,7 @@ function CreateEvent() {
                             startTime: e.target.value,
                           })
                         }
-                        className="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        className="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         {generateTimeOptions()}
                       </select>
                       <span className="text-gray-400">to</span>
@@ -347,7 +347,7 @@ function CreateEvent() {
                         onChange={(e) =>
                           setFormData({ ...formData, endTime: e.target.value })
                         }
-                        className="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        className="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
                         {generateTimeOptions()}
                       </select>
                     </div>
@@ -356,7 +356,7 @@ function CreateEvent() {
 
                 {/* Link and Location */}
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
                     <Presentation className="text-cyan-300" />
                     <input
                       type="text"
@@ -365,10 +365,10 @@ function CreateEvent() {
                       onChange={(e) =>
                         setFormData({ ...formData, link: e.target.value })
                       }
-                      className="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500"
+                      className="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500"
                     />
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
                     <MapPin className="text-cyan-300" />
                     <input
                       type="text"
@@ -377,7 +377,7 @@ function CreateEvent() {
                       onChange={(e) =>
                         setFormData({ ...formData, location: e.target.value })
                       }
-                      className="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500"
+                      className="w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500"
                     />
                   </div>
                 </div>
@@ -385,7 +385,7 @@ function CreateEvent() {
                 {/* Save Button */}
                 <button
                   onClick={saveEvent}
-                  className="w-full p-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300">
+                  className="w-full p-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:from-cyan-600 hover:to-blue-700 transition-all duration-300">
                   Save Event
                 </button>
               </div>
