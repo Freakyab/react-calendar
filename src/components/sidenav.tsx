@@ -11,7 +11,6 @@ function Sidenav({
 }: {
   setUpdateEventId: (id: number) => void;
 }) {
-
   // Fetch events from the redux store
   const { events } = useEvents();
 
@@ -76,28 +75,6 @@ function Sidenav({
     });
   };
 
-  // Function to download the events as CSV
-  const downloadCsvOfEvent = () => {
-    try {
-      const csv = events
-        .map(
-          (event) =>
-            `${event.title},${event.date},${event.startTime},${event.endTime},${event.category}\n`
-        )
-        .join("");
-
-      const blob = new Blob([csv], { type: "text/csv" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "events.csv";
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   const EventList = ({
     events,
     title,
@@ -111,10 +88,6 @@ function Sidenav({
         <p className="text-lg font-semibold tracking-wide text-gray-200">
           {title}
         </p>
-        {title === "Upcoming Events" && (
-          <Download onClick={downloadCsvOfEvent} className="h-6 w-6 text-gray-400 cursor-pointer"
-          />
-        )}
       </div>
       <div className="flex flex-col gap-4 p-4 overflow-auto max-h-[50vh]">
         {events.map((event) => (
@@ -162,15 +135,37 @@ function Sidenav({
     </div>
   );
 
+  // Function to download the events as CSV
+  const downloadCsvOfEvent = () => {
+    try {
+      const csv = events
+        .map(
+          (event) =>
+            `${event.title},${event.date},${event.startTime},${event.endTime},${event.category}\n`
+        )
+        .join("");
+
+      const blob = new Blob([csv], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "events.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <div className="w-[35%] h-screen bg-secondary flex flex-col">
+    <div className="w-[35%] h-screen bg-secondary flex flex-col relative">
       <div className="p-4 border-b border-gray-700 flex items-center justify-between">
         <h2 className="text-xl tracking-wide flex items-center gap-4">
           <Calendar className="h-6 w-6 text-gray-400" />
           React Calendar
         </h2>
         <button
-          className="flex items-center gap-1 bg-slate-600 rounded-lg p-2 text-sm transition-all hover:bg-slate-500"
+          className="flex items-center gap-1 bg-gradient-to-r from-blue-600/50 to-cyan-400/40 rounded-md p-2 text-sm transition-all hover:bg-slate-500"
           onClick={handleModelOpen}>
           <Plus className="h-4 w-4" />
           Create Event
@@ -192,6 +187,14 @@ function Sidenav({
           icon={Archive}
         />
       )}
+
+      <div className="w-full flex absolute bottom-5 right-4">
+        <button
+          onClick={downloadCsvOfEvent}
+          className="bg-gradient-to-r from-blue-600/50 to-cyan-400/40 rounded-lg p-2 my-2 ml-auto">
+          Export to CSV
+        </button>
+      </div>
     </div>
   );
 }

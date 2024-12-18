@@ -76,18 +76,14 @@ const Calendar = ({
       { length: 48 },
       (_, hour) =>
         // Format the time slots as 12-hour format
-        `${Math.floor(hour / 2)}:${hour % 2 === 0 ? "00" : "30"} ${
-          Math.floor(hour / 2) < 12 ? "AM" : "PM"
-        }`
+        `${Math.floor(hour / 2)}:${hour % 2 === 0 ? "00" : "30"}`
     );
 
     return (
       <div className="grid grid-cols-[max-content_1fr_1fr_1fr_1fr_1fr_1fr_1fr] gap-2 py-2">
         {/* Time Slots Column */}
         <div className="flex flex-col border-r border-gray-600 px-2">
-          <div className=" text-white p-2 text-center font-light">
-            Time
-          </div>
+          <div className=" text-white p-2 text-center font-light">Time</div>
           {timeSlots.map((time, hour) => (
             <div
               key={hour}
@@ -250,7 +246,7 @@ const Calendar = ({
                   isCurrentMonth ? "text-white" : "text-gray-400"
                 } ${
                   format(new Date(), "yyyy-MM-dd") === cellDate
-                    ? "bg-slate-800"
+                    ? "bg-gradient-to-r from-blue-600/50 to-cyan-400/40"
                     : ""
                 } ${isCurrentDayWeekend && "text-red-500"}`}>
                 {formattedDate}
@@ -317,6 +313,8 @@ const Calendar = ({
     return <DragDropContext onDragEnd={handleDragEnd}>{rows}</DragDropContext>;
   };
 
+  
+
   return (
     <div className="w-full h-screen px-4 py-2 overflow-auto">
       <div className="flex gap-2 justify-between w-full my-2">
@@ -368,6 +366,7 @@ const Calendar = ({
           {renderHeader()}
           {renderDays()}
           {renderCells()}
+          
         </React.Fragment>
       ) : (
         <React.Fragment>
