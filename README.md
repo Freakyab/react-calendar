@@ -1,50 +1,154 @@
-# React + TypeScript + Vite
+Here's a `README.md` file for your project, including the necessary steps and commands to get started with the React + TypeScript + Vite setup:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### `README.md`
 
-Currently, two official plugins are available:
+```markdown
+# React + TypeScript + Vite Project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This is a minimal setup for using React with TypeScript and Vite, with hot module replacement (HMR) and ESLint configuration to help you follow best practices. This setup provides a fast and efficient development environment.
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Before getting started, ensure you have the following installed on your system:
 
-- Configure the top-level `parserOptions` property like this:
+- **Node.js** (v14 or above)
+- **npm** (v6 or above)
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Getting Started
+
+### 1. Clone the Repository
+
+If you haven't already cloned the repository, you can do so with:
+
+```bash
+git clone <https://github.com/Freakyab/react-calendar>
+cd react-calendar
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 2. Install Dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Install the required dependencies by running:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install
 ```
+
+### 3. Run the Development Server
+
+To start the Vite development server, use the following command:
+
+```bash
+npm run dev
+```
+
+This will start the server, and you can access your project at `http://localhost:3000` (by default).
+
+### 4. Build for Production
+
+When you're ready to build the production version of your application, run:
+
+```bash
+npm run build
+```
+
+This will generate a production build in the `dist/` folder.
+
+### 5. Preview the Production Build
+
+To preview the production build locally, use:
+
+```bash
+npm run serve
+```
+
+This will serve the built project, allowing you to preview it in your browser.
+
+## ESLint Configuration
+
+This project comes with an ESLint configuration that helps you follow best practices for React and TypeScript.
+
+### ESLint Type-Aware Setup
+
+We recommend updating the ESLint configuration for type-aware linting by following these steps:
+
+1. **Update ESLint Config**
+
+   Edit your ESLint configuration file (e.g., `eslint.config.js`) with the following:
+
+   ```js
+   import react from 'eslint-plugin-react'
+   import { tseslint } from 'tseslint'
+
+   export default tseslint.config({
+     languageOptions: {
+       parserOptions: {
+         project: ['./tsconfig.node.json', './tsconfig.app.json'],
+         tsconfigRootDir: import.meta.dirname,
+       },
+     },
+     plugins: {
+       react,
+     },
+     settings: { react: { version: '18.3' } },
+     rules: {
+       ...react.configs.recommended.rules,
+       ...react.configs['jsx-runtime'].rules,
+     },
+   })
+   ```
+
+2. **Install ESLint and Plugins**
+
+   Ensure you have the necessary ESLint dependencies installed by running:
+
+   ```bash
+   npm install eslint eslint-plugin-react tseslint --save-dev
+   ```
+
+3. **Optional**: Add `eslint-plugin-react` to your ESLint configuration to enable React-specific linting rules.
+
+## TypeScript Configuration
+
+Make sure your `tsconfig.json` files (e.g., `tsconfig.node.json`, `tsconfig.app.json`) are properly configured to support the development environment.
+
+### Example `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"]
+}
+```
+
+## Folder Structure
+
+Here's a basic overview of the folder structure:
+
+```
+/src
+  /components
+  /pages
+  App.tsx
+  index.tsx
+/public
+  index.html
+/package.json
+/tsconfig.json
+/eslint.config.js
+```
+
+## Scripts
+
+- **`npm run dev`**: Starts the Vite development server (HMR enabled).
+- **`npm run build`**: Builds the production version of the app.
+- **`npm run serve`**: Serves the production build for preview.
