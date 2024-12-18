@@ -339,10 +339,10 @@ const Calendar = ({
         {/* 
           Calendar/List View Toggle
         */}
-        <div className="bg-white ml-auto text-black flex w-fit rounded-lg">
+        <div className="ml-auto text-white border-cyan-800 border-2 flex w-fit rounded-xl">
           <button
             className={`${
-              isCalendarFormat && "bg-green-400 rounded-l-lg text-white"
+              isCalendarFormat && "bg-gradient-to-r from-blue-600/50 to-cyan-400/40 rounded-l-lg text-white"
             } p-2`}
             onClick={() => setIsCalendarFormat(true)}>
             <Calendar1 />
@@ -350,7 +350,7 @@ const Calendar = ({
 
           <button
             className={`${
-              !isCalendarFormat && "bg-green-400 rounded-r-lg text-white"
+              !isCalendarFormat && "bg-gradient-to-r from-blue-600/50 to-cyan-400/40 rounded-r-lg text-white"
             } p-2`}
             onClick={() => setIsCalendarFormat(false)}>
             <ListIcon />
