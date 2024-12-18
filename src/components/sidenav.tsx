@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useEvents from "@/redux/useEvents";
 import { format } from "date-fns";
-import { Plus, Calendar, Archive, Download } from "lucide-react";
+import { Plus, Calendar, Archive } from "lucide-react";
 import { useModelOption } from "@/context";
 import { eventColor } from "./eventColors";
 import { eventPayload } from "@/redux/eventReducer";
@@ -188,13 +188,15 @@ function Sidenav({
         />
       )}
 
-      <div className="w-full flex absolute bottom-5 right-4">
-        <button
-          onClick={downloadCsvOfEvent}
-          className="bg-gradient-to-r from-blue-600/50 to-cyan-400/40 rounded-lg p-2 my-2 ml-auto">
-          Export to CSV
-        </button>
-      </div>
+      {events.length > 0 && (
+        <div className="w-full flex absolute bottom-5 right-4">
+          <button
+            onClick={downloadCsvOfEvent}
+            className="bg-gradient-to-r from-blue-600/50 to-cyan-400/40 rounded-lg p-2 my-2 ml-auto">
+            Export to CSV
+          </button>
+        </div>
+      )}
     </div>
   );
 }
