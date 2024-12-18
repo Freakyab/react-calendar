@@ -141,7 +141,7 @@ function CreateEvent() {
       const systemPrompt = `Create an event with the following json parameters:
      { title: "",
     description: "create description as per the given title mentioned in prompt",
-      date:"dd-mm-yyyy",
+      date:"dd-mm-yyyy" //for reference todays date is ${new Date().toISOString().split("T")[0]},
       startTime: "hh:mm",
       endTime: "hh:mm",
       category: "Work | Personal | Others",
