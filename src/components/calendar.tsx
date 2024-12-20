@@ -316,7 +316,7 @@ const Calendar = ({
   
 
   return (
-    <div className="w-full h-screen px-4 py-2 overflow-auto">
+    <div className="w-full sm:h-screen px-4 py-2 overflow-auto">
       <div className="flex gap-2 justify-between w-full my-2">
         {/* 
           Search Input and Calendar/List View Toggle

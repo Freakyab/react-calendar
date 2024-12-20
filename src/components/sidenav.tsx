@@ -158,7 +158,7 @@ function Sidenav({
   };
 
   return (
-    <div className="w-[35%] h-screen bg-secondary flex flex-col relative">
+    <div className="w-full sm:w-[35%] h-screen bg-secondary flex flex-col relative">
       <div className="p-4 border-b border-gray-700 flex items-center justify-between">
         <h2 className="text-xl tracking-wide flex items-center gap-4">
           <Calendar className="h-6 w-6 text-gray-400" />
@@ -172,6 +172,11 @@ function Sidenav({
         </button>
       </div>
 
+     {
+      events.length === 0 &&
+     <h2 className="text-lg font-semibold p-4 border-b border-gray-700 italic">
+        No events found{" "}
+      </h2>}
       {filteredEvents.upcoming.length > 0 && (
         <EventList
           events={filteredEvents.upcoming}

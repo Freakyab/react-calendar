@@ -188,6 +188,11 @@ const eventReducer = createSlice({
         return dateA.getTime() - dateB.getTime();
       });
     },
+    deleteAllEvents: (state) => {
+      console.log("Deleting all events");
+      console.log(state.events);
+      state.events = [];
+    },
   },
 });
 

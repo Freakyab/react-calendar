@@ -109,6 +109,7 @@ function CreateEvent() {
         ...formData,
       });
       setControlOption({ ...controlOption, isModelOpen: false });
+      // console.log(formData);
     } catch (error) {
       console.log("Something Went Wrong");
       resetFromData();
@@ -141,7 +142,9 @@ function CreateEvent() {
       const systemPrompt = `Create an event with the following json parameters:
      { title: "",
     description: "create description as per the given title mentioned in prompt",
-      date:"dd-mm-yyyy" //for reference todays date is ${new Date().toISOString().split("T")[0]},
+      date:"Date ()", //for reference todays date is ${
+        new Date().toISOString().split("T")[0]
+      },
       startTime: "hh:mm",
       endTime: "hh:mm",
       category: "Work | Personal | Others",
@@ -184,7 +187,7 @@ function CreateEvent() {
 
   return (
     <Dialog open={isModelOpen} onOpenChange={handleModelClose}>
-      <DialogContent className="w-[50%] bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+      <DialogContent className="sm:w-[50%] bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
         <DialogHeader className="relative flex items-center">
           {/* 
             Button to toggle AI mode
@@ -199,7 +202,7 @@ function CreateEvent() {
               className="relative inline-flex h-12 overflow-hidden rounded-xl p-[2px] focus:outline-none"
               onClick={() => setIsAiMode(!isAiMode)}>
               <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#22d3ee_0%,#4338ca_50%,#22d3ee_100%)]" />
-              <span className=" h-full w-full cursor-pointer justify-center rounded-xl bg-gray-950/90 px-4 py-1 text-sm font-medium text-cyan-300 backdrop-blur-3xl flex items-center gap-2">
+              <span className=" h-full w-full cursor-pointer justify-center rounded-xl bg-gray-950/90 sm:px-4 px-2 py-1 text-sm font-medium text-cyan-300 backdrop-blur-3xl flex items-center gap-2">
                 <Sparkles className="w-5 h-5" />
                 {isAiMode ? "Manual Mode" : "AI Assistant"}
               </span>
@@ -224,7 +227,7 @@ function CreateEvent() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
-              className="flex flex-col justify-start text-sm gap-6 px-8 py-4">
+              className="flex flex-col text-sm gap-6 sm:px-8 py-4">
               <label
                 className="text-sm font-semibold text-cyan-300 flex items-center gap-2"
                 htmlFor="event-description">
@@ -233,6 +236,7 @@ function CreateEvent() {
               </label>
               <textarea
                 rows={8}
+                disabled={isGenerating}
                 placeholder="Describe your event and let AI help you plan..."
                 className="bg-gray-800 p-4 rounded-xl border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-white placeholder-gray-500"
                 onChange={(e) => setAiDescription(e.target.value)}
@@ -253,7 +257,7 @@ function CreateEvent() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="flex flex-col text-sm gap-6 px-8 py-4">
+              className="flex flex-col text-sm gap-6 sm:px-8 py-4">
               {/* 
                   Event Form Fields
               */}

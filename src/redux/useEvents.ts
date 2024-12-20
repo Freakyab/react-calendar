@@ -20,7 +20,11 @@ const useEvents = () => {
         dispatch(Events.updateEvent(event));
     };
 
-    return { events, addEvent, deleteEvent, updateEvent };
+    const AllDeleteEvent = () => {
+        dispatch(Events.deleteAllEvents());
+    }
+
+    return { events, addEvent, deleteEvent, updateEvent, AllDeleteEvent };
 }
 
 export default useEvents;
