@@ -158,7 +158,7 @@ function Sidenav({
   };
 
   return (
-    <div className="w-full sm:w-[35%] h-screen bg-secondary flex flex-col relative">
+    <div className="w-full sm:w-[35%] h-screen sm:border-secondary sm:border-r flex flex-col relative">
       <div className="p-4 border-b border-gray-700 flex items-center justify-between">
         <h2 className="text-xl tracking-wide flex items-center gap-4">
           <Calendar className="h-6 w-6 text-gray-400" />
@@ -197,7 +197,7 @@ function Sidenav({
         <div className="w-full flex absolute bottom-5 right-4">
           <button
             onClick={downloadCsvOfEvent}
-            className="bg-gradient-to-r from-blue-600/50 to-cyan-400/40 rounded-lg p-2 my-2 ml-auto">
+            className="bg-gradient-to-r from-blue-600/50 to-cyan-400/40 rounded-lg p-2 px-4 my-2 ml-auto">
             Export to CSV
           </button>
         </div>

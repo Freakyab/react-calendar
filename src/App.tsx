@@ -10,7 +10,7 @@ function App() {
   const [updateEventId, setUpdateEventId] = useState(-1);
 
   return (
-    <div className="flex flex-col-reverse sm:flex-row bg-primary text-white">
+    <div className="flex flex-col-reverse sm:flex-row bg-secondary bg-gradient-to-r from-cyan-400/0 to-blue-600/10 text-white">
       <Sidenav setUpdateEventId={setUpdateEventId} />
       <Calendar setUpdateEventId={setUpdateEventId} />
       <CreateEvent />

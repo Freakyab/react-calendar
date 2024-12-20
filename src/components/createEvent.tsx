@@ -109,11 +109,10 @@ function CreateEvent() {
         ...formData,
       });
       setControlOption({ ...controlOption, isModelOpen: false });
-      // console.log(formData);
     } catch (error) {
       console.log("Something Went Wrong");
-      resetFromData();
     }
+    resetFromData();
   };
 
   // Function to close the model and reset form data
@@ -147,6 +146,7 @@ function CreateEvent() {
       },
       startTime: "hh:mm",
       endTime: "hh:mm",
+      // the difference between start and end time should be atleast 30 minutes
       category: "Work | Personal | Others",
       event : "",
       location: "",
@@ -159,9 +159,14 @@ function CreateEvent() {
       const text = response.text();
 
       // Parse the generated JSON and update form data
-      const json = JSON.parse(text.replace(/```json|```/g, ""));
+      let json = JSON.parse(text.replace(/```json|```/g, ""));
 
       // Update form data with generated event details
+
+      if (isNaN(Date.parse(json.date))) {
+        json.date = new Date().toISOString().split("T")[0];
+      }
+
       setFormData({
         ...formData,
         title: json.title,

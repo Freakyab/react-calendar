@@ -9,6 +9,8 @@ import {
   addMonths,
   subMonths,
   isWeekend,
+  subWeeks,
+  addWeeks,
 } from "date-fns";
 import { Calendar1, ChevronLeft, ChevronRight, ListIcon } from "lucide-react";
 import useEvents from "@/redux/useEvents";
@@ -23,6 +25,7 @@ const Calendar = ({
 }) => {
   // To track the current month
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [currentWeekDay, setCurrentWeekDay] = useState(new Date());
 
   // To toggle between calendar and list view
   const [isCalendarFormat, setIsCalendarFormat] = useState(true);
@@ -66,9 +69,8 @@ const Calendar = ({
 
   // Function to render the list view of the calendar
   const renderListCells = () => {
-    // Get the unique dates from the events
     const weekDays = Array.from({ length: 7 }, (_, i) =>
-      format(addDays(startOfWeek(new Date()), i), "yyyy-MM-dd")
+      format(addDays(currentWeekDay, i), "yyyy-MM-dd")
     );
 
     // Create time slots for the list view
@@ -76,7 +78,15 @@ const Calendar = ({
       { length: 48 },
       (_, hour) =>
         // Format the time slots as 12-hour format
-        `${Math.floor(hour / 2)}:${hour % 2 === 0 ? "00" : "30"}`
+        `${
+          Math.floor(hour / 2) > 12
+            ? Math.floor(hour / 2) - 12
+            : Math.floor(hour / 2) === 0
+            ? 12
+            : Math.floor(hour / 2)
+        }:${hour % 2 === 0 ? "00" : "30"} ${
+          Math.floor(hour / 2) >= 12 ? "PM" : "AM"
+        }`
     );
 
     return (
@@ -97,6 +107,7 @@ const Calendar = ({
         {weekDays.map((day) => (
           <div key={day} className="flex flex-col border border-gray-600">
             <div className="p-2 text-center font-light">
+              {/* {day} */}
               {format(new Date(day), "EEE dd")}
             </div>
 
@@ -135,7 +146,7 @@ const Calendar = ({
                             position: "absolute",
                             width: "100%",
                           }}
-                          className={`rounded first-letter:capitalize
+                          className={` first-letter:capitalize leading-8 text-sm
                           ${
                             eventColor[
                               event.category as keyof typeof eventColor
@@ -146,7 +157,7 @@ const Calendar = ({
                               event.category as keyof typeof eventColor
                             ].primary
                           }
-                          pl-2 line-clamp-1 cursor-pointer`}>
+                          pl-2 cursor-pointer`}>
                           {event.title}
                         </div>
                       );
@@ -157,6 +168,23 @@ const Calendar = ({
             ))}
           </div>
         ))}
+      </div>
+    );
+  };
+
+  const renderListHeader = () => {
+    return (
+      <div className="flex justify-between items-center p-2">
+        {/* Navigation Buttons*/}
+        {/* update the current week day to next or week day
+         */}
+        <button onClick={() => setCurrentWeekDay(subWeeks(currentWeekDay, 1))}>
+          <ChevronLeft />
+        </button>
+        <h2 className="text-xl">{format(currentWeekDay, "dd MMMM yyyy")}</h2>
+        <button onClick={() => setCurrentWeekDay(addWeeks(currentWeekDay, 1))}>
+          <ChevronRight />
+        </button>
       </div>
     );
   };
@@ -244,7 +272,11 @@ const Calendar = ({
                 }}
                 className={`p-2 border-[2px] border-secondary hover:bg-slate-700 text-black rounded-md 
                   ${isCurrentDayWeekend && "text-red-500"}
-                  ${isCurrentMonth && !isCurrentDayWeekend   ? "text-white" : "text-gray-400"} ${
+                  ${
+                    isCurrentMonth && !isCurrentDayWeekend
+                      ? "text-white"
+                      : "text-gray-400"
+                  } ${
                   format(new Date(), "yyyy-MM-dd") === cellDate
                     ? "bg-gradient-to-r from-blue-600/50 to-cyan-400/40"
                     : ""
@@ -283,7 +315,7 @@ const Calendar = ({
                               eventColor[
                                 event.category as keyof typeof eventColor
                               ].primary
-                            } first-letter:capitalize text-sm p-1 rounded-xl cursor-pointer`}>
+                            } first-letter:capitalize text-sm px-2 rounded-xl cursor-pointer line-clamp-1`}>
                             {event.title}
                           </div>
                         )}
@@ -369,7 +401,7 @@ const Calendar = ({
         </React.Fragment>
       ) : (
         <React.Fragment>
-          {/* {renderDays()} */}
+          {renderListHeader()}
           {renderListCells()}
         </React.Fragment>
       )}

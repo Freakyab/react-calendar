@@ -12,7 +12,6 @@ import { motion } from "framer-motion";
 import { eventColor } from "./eventColors";
 
 function EventDetails({ updateEventId }: { updateEventId: number }) {
-
   // Fetch events and control options from context and redux
   const { events, updateEvent, deleteEvent } = useEvents();
   const { controlOption, setControlOption } = useModelOption();
@@ -51,8 +50,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
 
   // Generate time options for select input
   const generateTimeOptions = () =>
-
-    // Array of 24 hours with 30 minutes interval 
+    // Array of 24 hours with 30 minutes interval
     // for example: ["00:00", "00:30", "01:00", "01:30", ...]
     Array.from({ length: 24 }, (_, hour) =>
       ["00", "30"].map((minute) => {
@@ -65,7 +63,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
       })
     ).flat();
 
-    // Close event details modal
+  // Close event details modal
   const handleModelClose = () => {
     setControlOption({
       ...controlOption,
@@ -91,7 +89,6 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
     }
 
     try {
-
       // Update event with new data and close modal
       const event = {
         ...formData,
@@ -115,7 +112,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
 
   return (
     <Dialog open={isEventDetails} onOpenChange={handleModelClose}>
-      <DialogContent className="w-[50%] min-h-[90%] bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
+      <DialogContent className="sm:w-[50%] min-h-[90%] bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden">
         <DialogHeader className="relative flex items-center">
           <DialogTitle className="flex-grow text-2xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-600 pb-4">
             Event Details
@@ -126,16 +123,17 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -100 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
-          className={`absolute top-6 left-6 rounded-full border ${
-            !isEditable ? "border-red-400" : "border-blue-400"
-          }  p-2 cursor-pointer`}
+          // bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-600
+          className={`absolute top-6 left-6 rounded-xl 
+            border border-blue-600
+            p-2 cursor-pointer`}
           onClick={() =>
             setControlOption({ ...controlOption, isEditable: !isEditable })
           }>
           {!isEditable ? (
-            <Pen className="text-red-400" />
+            <Pen className="text-blue-400" size={15} />
           ) : (
-            <Eye className="text-blue-400" />
+            <Eye className="text-blue-600" size={15} />
           )}
         </motion.div>
         <motion.div
@@ -143,7 +141,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex flex-col text-sm gap-6 px-8 py-4">
+          className="flex flex-col text-sm gap-6 sm:px-8 py-4">
           {/* Event Title */}
           <div className="space-y-6">
             <div className="space-y-2">
@@ -208,7 +206,7 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
                 <input
                   disabled={!isEditable}
                   type="date"
-                  className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500
+                  className={`w-full  bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500
                     ${!isEditable && "cursor-not-allowed"}  
                     `}
                   value={formData.date}
