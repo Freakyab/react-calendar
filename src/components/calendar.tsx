@@ -242,13 +242,13 @@ const Calendar = ({
                     isModelOpen: true,
                   });
                 }}
-                className={`p-2 border-[2px] border-secondary hover:bg-slate-700 text-black rounded-md ${
-                  isCurrentMonth ? "text-white" : "text-gray-400"
-                } ${
+                className={`p-2 border-[2px] border-secondary hover:bg-slate-700 text-black rounded-md 
+                  ${isCurrentDayWeekend && "text-red-500"}
+                  ${isCurrentMonth && !isCurrentDayWeekend   ? "text-white" : "text-gray-400"} ${
                   format(new Date(), "yyyy-MM-dd") === cellDate
                     ? "bg-gradient-to-r from-blue-600/50 to-cyan-400/40"
                     : ""
-                } ${isCurrentDayWeekend && "text-red-500"}`}>
+                } `}>
                 {formattedDate}
                 <div className="flex flex-col overflow-y-auto max-h-14 gap-1 items-stretch pt-1">
                   {/* 
@@ -313,8 +313,6 @@ const Calendar = ({
     return <DragDropContext onDragEnd={handleDragEnd}>{rows}</DragDropContext>;
   };
 
-  
-
   return (
     <div className="w-full sm:h-screen px-4 py-2 overflow-auto">
       <div className="flex gap-2 justify-between w-full my-2">
@@ -342,7 +340,8 @@ const Calendar = ({
         <div className="ml-auto text-white border-cyan-800 border-2 flex w-fit rounded-xl">
           <button
             className={`${
-              isCalendarFormat && "bg-gradient-to-r from-blue-600/50 to-cyan-400/40 rounded-l-lg text-white"
+              isCalendarFormat &&
+              "bg-gradient-to-r from-blue-600/50 to-cyan-400/40 rounded-l-lg text-white"
             } p-2`}
             onClick={() => setIsCalendarFormat(true)}>
             <Calendar1 />
@@ -350,7 +349,8 @@ const Calendar = ({
 
           <button
             className={`${
-              !isCalendarFormat && "bg-gradient-to-r from-blue-600/50 to-cyan-400/40 rounded-r-lg text-white"
+              !isCalendarFormat &&
+              "bg-gradient-to-r from-blue-600/50 to-cyan-400/40 rounded-r-lg text-white"
             } p-2`}
             onClick={() => setIsCalendarFormat(false)}>
             <ListIcon />
@@ -366,7 +366,6 @@ const Calendar = ({
           {renderHeader()}
           {renderDays()}
           {renderCells()}
-          
         </React.Fragment>
       ) : (
         <React.Fragment>
