@@ -89,6 +89,10 @@ const Calendar = ({
         }`
     );
 
+    const countEventsForDate = (date: string) => {
+      return events.filter((event) => event.date === date).length;
+    };
+
     return (
       <div className="grid grid-cols-[max-content_1fr_1fr_1fr_1fr_1fr_1fr_1fr] gap-2 py-2">
         {/* Time Slots Column */}
@@ -109,6 +113,11 @@ const Calendar = ({
             <div className="p-2 text-center font-light">
               {/* {day} */}
               {format(new Date(day), "EEE dd")}
+              {countEventsForDate(day) > 0 && (
+                <span className=" inline-flex h-fit p-1 px-2 ml-2 bg-red-500 rounded-full justify-center items-center text-xs">
+                  {countEventsForDate(day)}
+                </span>
+              )}
             </div>
 
             {/* Hour Slots */}

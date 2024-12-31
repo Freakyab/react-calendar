@@ -10,12 +10,14 @@ import { useModelOption } from "@/context";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { eventColor } from "./eventColors";
+import { useToast } from "@/hooks/use-toast";
 
 function EventDetails({ updateEventId }: { updateEventId: number }) {
   // Fetch events and control options from context and redux
   const { events, updateEvent, deleteEvent } = useEvents();
   const { controlOption, setControlOption } = useModelOption();
   const { isEventDetails, isEditable } = controlOption;
+  const { toast } = useToast();
 
   // Fetch event details to update
   const data = events.find((event) => event.id === updateEventId);
@@ -75,16 +77,28 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
   // Save event details
   const handleSave = () => {
     if (!formData.title) {
-      alert("Please provide title for the event");
+      // alert("Please provide title for the event");
+      toast({
+        title: "Please provide title for the event",
+        variant: "destructive",
+      });
       return;
     }
     if (!formData.date || !formData.startTime || !formData.endTime) {
-      alert("Please provide date and time for the event");
+      // alert("Please provide date and time for the event");
+      toast({
+        title: "Please provide date and time for the event",
+        variant: "destructive",
+      });
       return;
     }
 
     if (formData.startTime >= formData.endTime) {
-      alert("Please provide a valid time range for the event");
+      // alert("Please provide a valid time range for the event");
+      toast({
+        title: "Please provide a valid time range for the event",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -96,9 +110,16 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
       };
       updateEvent(event);
       handleModelClose(); // Close modal after save
+      toast({
+        title: "Event updated successfully",
+      });
     } catch (e) {
       alert(e);
-      console.error(e);
+      // console.error(e);
+      toast({
+        title: "Failed to update event",
+        variant: "destructive",
+      });
     }
   };
 
@@ -106,6 +127,9 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
   const handleDelete = () => {
     if (updateEventId !== -1) {
       deleteEvent(updateEventId);
+      toast({
+        title: "Event deleted successfully",
+      });
     }
     handleModelClose();
   };
@@ -252,44 +276,55 @@ function EventDetails({ updateEventId }: { updateEventId: number }) {
 
             {/* Link and Location */}
             <div className="space-y-4">
+              {
+                <div className="flex items-center gap-2">
+                  <Presentation className="text-cyan-300" />
+                  {isEditable ? (
+                    <input
+                      type="text"
+                      placeholder="Event Link"
+                      value={formData.link}
+                      onChange={(e) =>
+                        setFormData({ ...formData, link: e.target.value })
+                      }
+                      className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500 ${
+                        !isEditable && "cursor-not-allowed"
+                      }  `}
+                    />
+                  ) : formData.link ? (
+                    <a
+                      href={formData.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-blue-400 hover:underline pl-2">
+                      {formData.link}
+                    </a>
+                  ) : (
+                    <span className="text-gray-400 pl-2">No link provided</span>
+                  )}
+                </div>
+              }
               <div className="flex items-center gap-2">
-                <Presentation className="text-cyan-300" />
+                <MapPin className="text-cyan-300" />
                 {isEditable ? (
                   <input
                     type="text"
-                    placeholder="Event Link"
-                    value={formData.link}
+                    placeholder="Event Location"
+                    value={formData.location}
                     onChange={(e) =>
-                      setFormData({ ...formData, link: e.target.value })
+                      setFormData({ ...formData, location: e.target.value })
                     }
                     className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500 ${
                       !isEditable && "cursor-not-allowed"
                     }  `}
                   />
+                ) : formData.location ? (
+                  <span className="pl-2">{formData.location}</span>
                 ) : (
-                  <a
-                    href={formData.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-blue-400 hover:underline pl-2">
-                    {formData.link}
-                  </a>
+                  <span className="text-gray-400 pl-2">
+                    No location provided
+                  </span>
                 )}
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="text-cyan-300" />
-                <input
-                  disabled={!isEditable}
-                  type="text"
-                  placeholder="Event Location"
-                  value={formData.location}
-                  onChange={(e) =>
-                    setFormData({ ...formData, location: e.target.value })
-                  }
-                  className={`w-full bg-gray-800 border border-gray-700 rounded-xl p-2 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 placeholder-gray-500
-                    ${!isEditable && "cursor-not-allowed"}  
-                    `}
-                />
               </div>
             </div>
           </div>

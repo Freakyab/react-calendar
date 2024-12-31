@@ -11,12 +11,15 @@ import useEvents from "@/redux/useEvents";
 import { useModelOption } from "@/context";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { eventColor } from "./eventColors";
+import { useToast } from "@/hooks/use-toast";
 
 const genAI = new GoogleGenerativeAI("AIzaSyAXbPfySMNVUPVz4OOp6OAgGvleY7TeNV4");
 
 function CreateEvent() {
   // addEvent function from redux
   const { addEvent } = useEvents();
+
+  const { toast } = useToast();
 
   // controlOption from context
   const { controlOption, setControlOption } = useModelOption();
@@ -89,16 +92,28 @@ function CreateEvent() {
   const saveEvent = () => {
     // simple validation for title, date, start time and end time
     if (!formData.title) {
-      alert("Please provide title for the event");
+      // alert("Please provide title for the event");
+      toast({
+        variant: "destructive",
+        title: "Please provide title for the event",
+      })
       return;
     }
     if (!formData.date || !formData.startTime || !formData.endTime) {
-      alert("Please provide date and time for the event");
+      // alert("Please provide date and time for the event");
+      toast({
+        variant: "destructive",
+        description: "Please provide date and time for the event",
+      })
       return;
     }
 
     if (formData.startTime >= formData.endTime) {
-      alert("Please provide a valid time range for the event");
+      // alert("Please provide a valid time range for the event");
+      toast({
+        variant: "destructive",
+        title: "Please provide a valid time range for the event"
+      })
       return;
     }
 
@@ -108,9 +123,15 @@ function CreateEvent() {
         id: Math.floor(Math.random() * 1000000),
         ...formData,
       });
+      toast({
+        title: "Event created successfully",
+      })
       setControlOption({ ...controlOption, isModelOpen: false });
     } catch (error) {
-      console.log("Something Went Wrong");
+      toast({
+        variant: "destructive",
+        title: "Something went wrong. Please try again",
+      })
     }
     resetFromData();
   };
@@ -125,7 +146,11 @@ function CreateEvent() {
   const getResponseForGivenPrompt = async () => {
     // simple validation for AI description
     if (!aiDescription) {
-      alert("Please provide a description to generate event details");
+      // alert("Please provide a description to generate event details");
+      toast({
+        variant: "destructive",
+        title: "Please provide a description to generate event details",
+      });
       return;
     }
 
@@ -182,9 +207,13 @@ function CreateEvent() {
       setIsAiMode(false);
     } catch (error) {
       // Handle error and reset AI mode
-      alert("Something Went Wrong");
+      // alert("Something Went Wrong");
       setIsGenerating(false);
-      console.log(error);
+      // console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Something went wrong. Please try again",
+      });
     } finally {
       setIsGenerating(false);
     }
